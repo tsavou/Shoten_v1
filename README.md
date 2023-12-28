@@ -2,7 +2,8 @@
 
 1. **Cloner le Projet:**
     ```bash
-    git clone https://github.com/username/nom-de-votre-projet.git
+    git clone https://github.com/tsavou/Shoten_v1.git
+    
     ```
 
 2. **Backend - Installer les Dépendances et Configurer l'Environnement:**
