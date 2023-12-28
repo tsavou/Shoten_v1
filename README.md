@@ -8,7 +8,7 @@
 
 2. **Backend - Installer les Dépendances et Configurer l'Environnement:**
     ```bash
-    cd backend
+    cd back
     composer install
     cp .env.example .env
     php artisan key:generate
@@ -18,7 +18,7 @@
 
 3. **Frontend - Installer les Dépendances:**
     ```bash
-    cd frontend
+    cd front
     npm install
     ```
 
@@ -37,7 +37,7 @@
 
 1. **Backend:**
     ```bash
-    cd backend
+    cd back
     php artisan serve
     ```
 
@@ -45,7 +45,7 @@
 
 2. **Frontend:**
     ```bash
-    cd frontend
+    cd front
     npm run dev
     ```
 
