@@ -1,0 +1,24 @@
+@use "fonts";
+
+//Variables
+$dark-text-color: #142034;
+$light-text-color: #f3f3f3;
+$main-color: #0ca06b;
+$main-color-hover: #0ca06b90;
+$main-color-active: #0ca06b80;
+$secondary-color: #142034;
+$background-color: #f8f9fa;
+
+$font-default: "Raleway";
+
+//Mixins
+
+@mixin Arrow {
+    padding: 0 1rem;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  width: 10rem;
+  height: 10rem;
+  cursor: pointer;
+}

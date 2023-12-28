@@ -1,0 +1,60 @@
+//Import reset files for margin/padding + font-size
+@use "reset";
+
+.flex {
+  display: flex;
+}
+
+.flex-col {
+  display: flex;
+  flex-direction: column;
+}
+
+a {
+  text-decoration: none;
+  color: $dark-text-color;
+}
+
+ul {
+  list-style: none;
+}
+
+.requiredInput {
+  color: $main-color;
+  font-size: 3rem;
+}
+.form-group {
+  &::after {
+    content: "";
+    display: block;
+    margin: auto;
+    width: 85%;
+    height: 2px;
+    background-color: $main-color;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+  input {
+    text-align: center;
+    color: $light-text-color;
+    font-size: 3rem;
+    width: 80%;
+    border: 0;
+    background-color: transparent;
+    outline: none;
+    &::placeholder {
+      color: $light-text-color;
+    }
+  }
+}
+.form-btn-submit {
+  width: 20rem;
+  height: 5rem;
+  padding: 0.5rem;
+  border-radius: 1.25rem;
+  background-color: $main-color;
+  border: none;
+  text-align: center;
+  font-weight: 400;
+  font-size: 2.7rem;
+}
