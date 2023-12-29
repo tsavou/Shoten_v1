@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Model;
+
+
 
 class User extends Authenticatable
 {
@@ -43,8 +46,8 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function collection()
+    public function volumes()
     {
-        return $this->hasOne(Collection::class);
+        return $this->belongsToMany(Volume::class, 'collections', 'user_id', 'volume_id');
     }
 }

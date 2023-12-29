@@ -16,11 +16,11 @@ class Collection extends Model
 
     public function volume()
     {
-        return $this->hasMany(Volume::class);
+        return $this->belongsTo(Volume::class, 'volume_id');
     }
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

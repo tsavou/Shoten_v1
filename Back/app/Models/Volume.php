@@ -22,8 +22,8 @@ class Volume extends Model
         return $this->belongsTo(Manga::class);
     }
 
-    public function collections()
+    public function user()
     {
-        return $this->belongsTo(Collection::class);
+        return $this->belongsToMany(User::class, 'collections', 'volume_id', 'user_id');
     }
 }

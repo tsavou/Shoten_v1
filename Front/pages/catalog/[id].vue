@@ -16,10 +16,10 @@ console.log(mangaID)
 
 
 getManga(mangaID).then((data) => {
-    setTimeout(() => {
+    
          manga.value = data
         loading.value = false
-    }, 1000)
+    
    
 });
 

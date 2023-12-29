@@ -32,8 +32,12 @@ Route::get('/manga/{id}', [MangaController::class, 'show'])->name('manga.show');
 
 Route::get('/genres', [GenreController::class, 'index'])->name('genre');
 Route::get('/types', [TypeController::class, 'index'])->name('type');
-Route::get('/collections', [CollectionController::class, 'index'])->name('collection');
 Route::get('/volumes', [VolumeController::class, 'index'])->name('volumes');
+
+Route::get('/UserCollection', [CollectionController::class, 'showUserCollection'])->name('collection.show');
+Route::get('/User', [CollectionController::class, 'showUser'])->name('collection.showUser');
+Route::post('/collection/{volumeId}', [CollectionController::class, 'addToCollection'])->name('collection.addToCollection');
+Route::delete('/collection/{volumeId}', [CollectionController::class, 'removeFromCollection'])->name('collection.removeFromCollection');
 
 
 
