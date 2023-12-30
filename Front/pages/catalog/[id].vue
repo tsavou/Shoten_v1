@@ -1,6 +1,6 @@
 <script setup>
 
-import { getManga, addToCollection } from "@/api/manga";
+import { getManga, addToCollection, getCollection } from "@/api/manga";
 import { useCollectionStore } from "@/stores/Collection";
 
 definePageMeta({
@@ -8,19 +8,20 @@ definePageMeta({
 });
 
 const route = useRoute();
+
 const mangaID = route.params.id;
 const manga = ref({});
-const loading = ref(true)
+const loading = ref(true);
+
 const store = useCollectionStore()
-const auth = useAuthStore();
 
 
+// Récupération du manga selon l'id
 getManga(mangaID).then((data) => {
     manga.value = data
     loading.value = false
 
 });
-
 
 
 </script>
@@ -39,8 +40,8 @@ getManga(mangaID).then((data) => {
                         <IconsLike /> Suivi
                     </div>
 
-                    <ButtonsAdd v-if="!store.isMangaAdded(manga)" @click="store.addMangaToCollection(manga)" />
-                    <ButtonsAdded v-else @click="store.removeMangaFromCollection(manga)" />
+                    <ButtonsAdd v-if="!store.isMangaAdded(manga)" @click="" />
+                    <ButtonsAdded v-else @click="" />
 
 
 
@@ -73,21 +74,23 @@ getManga(mangaID).then((data) => {
 
         </div>
     </div>
+
+
     <div class="loader" v-else>
         <IconsLoader />
         <p>Loading</p>
     </div>
-
-
 
     <div class="volumes-container flex">
         <div class="volume-card flex" v-for="volume in manga.volumes">
 
             <div class="volume-img-wrapper">
                 <img :src="volume.image" :alt="manga.title + 'tome' + volume.number">
+                
                 <div class="desktop-btn flex">
-                    <IconsCheck v-if="store.isAdded(volume)" @click="removeFromCollection(auth.user.id, volume.id)" />
-                    <IconsAdd v-else @click="addToCollection(auth.user.id, volume.id)" />
+                    <IconsCheck v-if="store.isVolumeInCollection(volume.id)"
+                        @click="store.removeVolumeFromCollection(volume)" />
+                    <IconsAdd v-else @click="store.addVolumeToCollection(volume)" />
                 </div>
 
             </div>
@@ -95,8 +98,9 @@ getManga(mangaID).then((data) => {
             <div class="volume-info  flex-col">
                 <p>Tome {{ volume.number }}</p>
                 <div class="btn">
-                    <ButtonsAdd v-if="!store.isAdded(volume)" @click="addToCollection(auth.user.id, volume.id)" />
-                    <ButtonsAdded v-else @click="removeFromCollection(auth.user.id, volume.id)" />
+                    <ButtonsAdd v-if="!store.isVolumeInCollection(volume.id)"
+                        @click="store.addVolumeToCollection(volume)" />
+                    <ButtonsAdded v-else @click="store.removeVolumeFromCollection(volume)" />
                 </div>
             </div>
 

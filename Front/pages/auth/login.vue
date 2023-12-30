@@ -110,7 +110,7 @@ async function handleLogin() {
 
   // If the user is authenticated, redirect to the home page
   if (auth.user) {
-    navigateTo("/");
+    navigateTo("/account");
   }
   // If the user is not authenticated, display an error message
   else if (!auth.user) {

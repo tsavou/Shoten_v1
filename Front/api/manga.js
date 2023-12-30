@@ -16,3 +16,4 @@ export const addToCollection = async (userId, volumeId) => await useApiFetch(`/a
 export const removeFromCollection = async (userId, volumeId) => await useApiFetch(`/api/user/${userId}/collection/${volumeId}`, { method: "DELETE" })
     
 
+export const getCollection = async (userId) => await api(`/user/${userId}/collection`)

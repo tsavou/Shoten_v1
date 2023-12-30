@@ -132,8 +132,19 @@ const form = ref({
 });
 
 async function handleRegister() {
-  const response = await auth.register(form.value)
+  await auth.register(form.value)
+
+  await auth.login({
+    email: form.value.email,
+    password: form.value.password
+  })
+
+  if (auth.user) {
+    navigateTo("/account")
+  }   
 }
+
+
 </script>
 
 <style scoped lang="scss">

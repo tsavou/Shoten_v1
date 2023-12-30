@@ -49,8 +49,10 @@
           v-for="(manga, index) in mangasByPopularity"
           :key="index"
         >
+          <NuxtLink :to="`/catalog/${manga.id}`">
           <img :src="manga.image" />
           <p>{{ manga.title }}</p>
+          </NuxtLink>
         </div>
       </Slider>
     </section>

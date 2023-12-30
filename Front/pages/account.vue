@@ -24,7 +24,6 @@ definePageMeta({
 
             <div class="button">
                 <button v-if="auth.isLoggedIn" @click="auth.logout" class="disco"> Déconnexion </button>
-                <button class="disco">Supprimer le compte </button>
             </div>
 
             <div class="reseaux flex">
