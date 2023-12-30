@@ -15,35 +15,25 @@ class CollectionController extends Controller
         return $collection;
     }
 
-    public function showUserCollection()
+    public function showUserCollection($userId)
     {
 
-
-        // // $userId = auth()->user()->id;
-        $user_id = 7;
-        // $user = User::with(['volumes'])->find($user_id);
-
-        $collection = Collection::with(['volume', 'user'])->where('user_id', $user_id)->get();
+        $collection = Collection::with(['volume.manga', 'user'])->where('user_id', $userId)->get();
 
         // return $user;
         return $collection;
     }
 
-    public function showUser(){
-        // // $userId = auth()->user()->id;
-        $user_id = 7;
-        $user = User::with(['volumes'])->find($user_id);
+    public function showUser($userId){
+
+        $user = User::with(['volumes.manga'])->find($userId);
 
         return $user;
 
     }
 
-    public function addToCollection($volumeId)
+    public function addToCollection( $userId, $volumeId)
     {
-
-        // $userId = auth()->user()->id;
-        $userId = 7;
-
         if (Collection::where('volume_id', $volumeId)->where('user_id', $userId)->exists()) {
             return "le volume $volumeId est déjà dans votre collection";
         }
@@ -53,15 +43,18 @@ class CollectionController extends Controller
             'user_id' => $userId
         ]);
 
-        return "le volume $volumeId a bien été ajouté à votre collection";
+        return "le volume $volumeId a bien été ajouté à votre collection user $userId";
     }
 
-    public function removeFromCollection($volumeId)
+    public function removeFromCollection($userId, $volumeId)
     {
-
-        $userId = auth()->user()->id;
+        if (!Collection::where('volume_id', $volumeId)->where('user_id', $userId)->exists()) {
+            return "le volume $volumeId n'est pas dans votre collection";
+        }
 
         $volume = Collection::where('volume_id', $volumeId)->where('user_id', $userId)->first();
         $volume->delete();
+
+        return "le volume $volumeId a bien été supprimé de votre collection user $userId";
     }
 }

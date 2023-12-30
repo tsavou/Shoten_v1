@@ -34,10 +34,10 @@ Route::get('/genres', [GenreController::class, 'index'])->name('genre');
 Route::get('/types', [TypeController::class, 'index'])->name('type');
 Route::get('/volumes', [VolumeController::class, 'index'])->name('volumes');
 
-Route::get('/UserCollection', [CollectionController::class, 'showUserCollection'])->name('collection.show');
-Route::get('/User', [CollectionController::class, 'showUser'])->name('collection.showUser');
-Route::post('/collection/{volumeId}', [CollectionController::class, 'addToCollection'])->name('collection.addToCollection');
-Route::delete('/collection/{volumeId}', [CollectionController::class, 'removeFromCollection'])->name('collection.removeFromCollection');
+Route::get('/UserCollection/{userId}', [CollectionController::class, 'showUserCollection'])->name('collection.show');
+Route::get('/User/{userId}/collection', [CollectionController::class, 'showUser'])->name('collection.showUser');
+Route::post('user/{userId}/collection/{volumeId}', [CollectionController::class, 'addToCollection'])->name('collection.addToCollection');
+Route::delete('user/{userId}/collection/{volumeId}', [CollectionController::class, 'removeFromCollection'])->name('collection.removeFromCollection');
 
 
 

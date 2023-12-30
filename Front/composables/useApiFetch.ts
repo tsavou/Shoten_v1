@@ -1,5 +1,5 @@
 import type { UseFetchOptions } from "nuxt/app";
-import { useRequestHeaders } from "nuxt/app";
+import { useRequestHeaders, useCookie, useFetch } from "nuxt/app";
 
 export function useApiFetch<T>(path: string, options: UseFetchOptions<T> = {}) {
   // Headers for CSRF token and referer
@@ -37,3 +37,4 @@ export function useApiFetch<T>(path: string, options: UseFetchOptions<T> = {}) {
     },
   });
 }
+

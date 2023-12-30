@@ -1,6 +1,6 @@
 <script setup>
 
-import { getManga } from "@/api/manga";
+import { getManga, addToCollection } from "@/api/manga";
 import { useCollectionStore } from "@/stores/Collection";
 
 definePageMeta({
@@ -12,16 +12,15 @@ const mangaID = route.params.id;
 const manga = ref({});
 const loading = ref(true)
 const store = useCollectionStore()
-console.log(mangaID)
+const auth = useAuthStore();
 
 
 getManga(mangaID).then((data) => {
-    
-         manga.value = data
-        loading.value = false
-    
-   
+    manga.value = data
+    loading.value = false
+
 });
+
 
 
 </script>
@@ -55,17 +54,6 @@ getManga(mangaID).then((data) => {
                 </div>
 
                 <div>
-
-                    <!-- <ul>
-                        <li><span>Type : </span>{{ manga.type.name }}</li>
-                        <li><span>Genres : </span> {{ manga.genre.map(genre => genre.name).join(', ') }} </li>
-                        <li><span>Auteur : </span>{{ manga.author }}</li>
-                        <li><span>Editeur : </span>{{ manga.editor }}</li>
-                        <li><span>Date de 1ère publication : </span>{{ new Date(manga.release_date).getFullYear() }}</li>
-                        <li><span>Nombre de volumes : </span>{{ manga.volumes.length }} ({{ manga.status }})</li>
-                        <li><span>Synopsis : </span>{{ manga.synopsis }}</li>
-                    </ul> -->
-
                     <ul>
                         <li><span>Type : </span>{{ manga.type ? manga.type.name : 'N/A' }}</li>
                         <li><span>Genres : </span> {{ manga.genre ? manga.genre.map(genre => genre.name).join(', ') : 'N/A'
@@ -79,14 +67,16 @@ getManga(mangaID).then((data) => {
                         <li><span>Synopsis : </span>{{ manga.synopsis ? manga.synopsis : 'N/A' }}</li>
                     </ul>
 
-
                 </div>
 
             </div>
 
         </div>
     </div>
-    <div class="loader" v-else> <IconsLoader /><p>Loading</p></div>
+    <div class="loader" v-else>
+        <IconsLoader />
+        <p>Loading</p>
+    </div>
 
 
 
@@ -94,10 +84,10 @@ getManga(mangaID).then((data) => {
         <div class="volume-card flex" v-for="volume in manga.volumes">
 
             <div class="volume-img-wrapper">
-                <img :src="volume.image" alt="">
+                <img :src="volume.image" :alt="manga.title + 'tome' + volume.number">
                 <div class="desktop-btn flex">
-                    <IconsCheck v-if="store.isAdded(volume)" @click="store.removeFromCollection(volume)" />
-                    <IconsAdd v-else @click="store.addToCollection(volume)" />
+                    <IconsCheck v-if="store.isAdded(volume)" @click="removeFromCollection(auth.user.id, volume.id)" />
+                    <IconsAdd v-else @click="addToCollection(auth.user.id, volume.id)" />
                 </div>
 
             </div>
@@ -105,8 +95,8 @@ getManga(mangaID).then((data) => {
             <div class="volume-info  flex-col">
                 <p>Tome {{ volume.number }}</p>
                 <div class="btn">
-                    <ButtonsAdd v-if="!store.isAdded(volume)" @click="store.addToCollection(volume)" />
-                    <ButtonsAdded v-else @click="store.removeFromCollection(volume)" />
+                    <ButtonsAdd v-if="!store.isAdded(volume)" @click="addToCollection(auth.user.id, volume.id)" />
+                    <ButtonsAdded v-else @click="removeFromCollection(auth.user.id, volume.id)" />
                 </div>
             </div>
 
@@ -118,14 +108,14 @@ getManga(mangaID).then((data) => {
 
 <style scoped lang="scss">
 .loader {
-    width: 100vw;
-    height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    
+    margin-top: 5rem;
+
 }
+
 .header-manga {
     @media screen and (max-width: 768px) {
         display: none;

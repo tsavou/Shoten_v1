@@ -1,4 +1,5 @@
 import { ofetch } from "ofetch";
+import { useApiFetch } from "~/composables/useApiFetch";
 
 export const api = ofetch.create({
     baseURL: "http://127.0.0.1:8000/api/"
@@ -10,6 +11,8 @@ export const getTypes = async () => await api("/types")
 
 export const getManga = async (id) => await api(`/manga/${id}`)
 
+export const addToCollection = async (userId, volumeId) => await useApiFetch(`/api/user/${userId}/collection/${volumeId}`, { method: "POST" })
 
+export const removeFromCollection = async (userId, volumeId) => await useApiFetch(`/api/user/${userId}/collection/${volumeId}`, { method: "DELETE" })
     
 
