@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Collection;
 use App\Models\User;
+use App\Models\Volume;
 use Illuminate\Http\Request;
 
 class CollectionController extends Controller
@@ -57,4 +58,27 @@ class CollectionController extends Controller
 
         return "le volume $volumeId a bien été supprimé de votre collection user $userId";
     }
+
+    // public function addAllToCollection($userId,$mangaId)
+    // {
+    //     $volumes = Volume::where('manga_id', $mangaId)->get();
+
+    //     foreach ($volumes as $volume) {
+
+    //         $this->addToCollection($userId, $volume->id);
+
+    //     }
+    // }
+
+    // public function removeAllFromCollection($userId, $mangaId)
+
+    // {
+
+    //     $volumes = Volume::where('manga_id', $mangaId)->get();
+
+    //     foreach ($volumes as $volume) {
+
+    //         $this->removeFromCollection($userId, $volume->id);
+    //     }
+    // }
 }

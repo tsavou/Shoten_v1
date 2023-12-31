@@ -58,13 +58,17 @@ export const useCollectionStore = defineStore('collection', () => {
         return collection.value.some(v => v.manga_id === manga.id)
     }
 
-    // function addMangaToCollection(manga) {
-    //     collection.value.push(...manga.volumes)
-    // }
+    function addMangaToCollection(manga) {
+        for (const volume of manga.volumes) {
+            addVolumeToCollection(volume)
+        }
+    }
 
-    // function removeMangaFromCollection(manga) {
-    //     collection.value = collection.value.filter(v => v.manga_id !== manga.id)
-    // }
+    function removeMangaFromCollection(manga) {
+        for (const volume of manga.volumes) {
+            removeVolumeFromCollection(volume)
+        }
+    }
 
 
     return {
@@ -74,8 +78,8 @@ export const useCollectionStore = defineStore('collection', () => {
         addVolumeToCollection,
         removeVolumeFromCollection,
         isMangaAdded,
-        // addMangaToCollection,
-        // removeMangaFromCollection
+        addMangaToCollection,
+        removeMangaFromCollection
      }
 
 })

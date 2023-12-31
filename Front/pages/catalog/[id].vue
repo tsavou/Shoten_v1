@@ -40,8 +40,8 @@ getManga(mangaID).then((data) => {
                         <IconsLike /> Suivi
                     </div>
 
-                    <ButtonsAdd v-if="!store.isMangaAdded(manga)" @click="" />
-                    <ButtonsAdded v-else @click="" />
+                    <ButtonsAdd v-if="!store.isMangaAdded(manga)" @click="store.addMangaToCollection(manga)" />
+                    <ButtonsAdded v-else @click="store.removeMangaFromCollection(manga)" />
 
 
 
@@ -226,6 +226,7 @@ getManga(mangaID).then((data) => {
 .volumes-container {
     padding: 3rem;
     flex-direction: column;
+    margin-bottom: 2rem;
 
     @media screen and (min-width: 768px) {
         flex-direction: row;

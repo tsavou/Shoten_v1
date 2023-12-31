@@ -36,8 +36,12 @@ Route::get('/volumes', [VolumeController::class, 'index'])->name('volumes');
 
 Route::get('/userCollection/{userId}', [CollectionController::class, 'showUserCollection'])->name('collection.show');
 Route::get('/user/{userId}/collection', [CollectionController::class, 'showUser'])->name('collection.showUser');
+
 Route::post('user/{userId}/collection/{volumeId}', [CollectionController::class, 'addToCollection'])->name('collection.addToCollection');
 Route::delete('user/{userId}/collection/{volumeId}', [CollectionController::class, 'removeFromCollection'])->name('collection.removeFromCollection');
+
+Route::post('user/{userId}/collection/manga/{mangaId}', [CollectionController::class, 'addAllToCollection'])->name('collection.addAllToCollection');
+Route::delete('user/{userId}/collection/manga/{mangaId}', [CollectionController::class, 'removeAllFromCollection'])->name('collection.removeAllFromCollection');
 
 
 
