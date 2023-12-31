@@ -5,38 +5,78 @@ definePageMeta({
 
 
 import { useCollectionStore } from "@/stores/Collection";
-import { getMangas } from "@/api/manga";
 
-
-
-const mangas =ref([]);
-
-getMangas().then((data) => {
-  mangas.value = data;
-});
-
-const getMangaById = (volume) => {
-    return mangas.value.find(manga => manga.id === volume.manga_id)
-}
 
 const store = useCollectionStore()
 
-const countVolumesByMangaId = store.collection.reduce((acc, volume) => {
-    const mangaId = volume.manga_id;
-    acc[mangaId] = (acc[mangaId] || 0) + 1;
-    return acc;
-}, {});
+const collection = store.collection
 
-console.log(store.collection)
+const mangaCount= ref(0)
+
+const groupedCollection = ref([])
+
+// Groupe les volumes par manga
+groupedCollection.value = collection.reduce((acc, current) => {
+
+    // Vérifie si le manga existe déjà dans l'accumulateur
+    const existingManga = acc.find(item => item.manga_id === current.manga_id);
+
+    if (existingManga) {
+        // Si le manga existe, ajoute juste le volume à la liste du manga
+        existingManga.volumes.push(current);
+    } else {
+        // Si le manga n'existe pas encore, crée un nouvel élément
+        acc.push({
+            manga_id: current.manga_id,
+            manga: current.manga,
+            volumes: [current],
+        });
+
+        mangaCount.value++;
+    }
+
+    return acc;
+}, []);
+
+console.log(groupedCollection)
 
 </script>
 
 <template>
-    <p class="total"> <strong>{{ store.total }} tomes</strong> dans ta Mangathèque</p>
+
+    <p class="total"> <strong>{{ store.total }} </strong> tomes - <strong>{{ mangaCount }} </strong> mangas </p>
     <hr>
+    
 
+    <div v-for="manga in groupedCollection" :key="manga.manga_id">
 
-    <div v-if="mangas.length>0" v-for="volume in store.collection" :key="volume.id">
+        <div>
+
+            <NuxtLink class="card flex" :to="`/catalog/${manga.manga_id}`">
+
+                <div class="img-wrapper">
+                    <img :src="manga.manga.image" :alt="manga.manga.title">
+                </div>
+
+                <div class="manga-info">
+
+                    <h2>{{ manga.manga.title }}</h2>
+                    <p> {{ manga.volumes.length }} / {{ manga.manga.volumes.length }}  tomes - {{ manga.manga.status }}</p>
+
+                    <progress class="progress" :value="manga.volumes.length" :max="manga.manga.volumes.length"></progress>
+
+                </div>
+
+                <div>
+                    <IconsArrowToGo />
+                </div>           
+            </NuxtLink>
+        </div>
+        <hr>
+
+    </div>
+
+    <!-- <div v-if="mangas.length>0" v-for="volume in store.collection" :key="volume.id">
 
         <div>
 
@@ -66,7 +106,7 @@ console.log(store.collection)
 
 
     </div>
-    <div v-else> Chargement...</div>
+    <div v-else> Chargement...</div> -->
 </template>
 
 <style scoped lang="scss">
@@ -91,6 +131,7 @@ console.log(store.collection)
         img {
             width: 100%;
             border-radius: 1rem;
+            
         }
     }
 

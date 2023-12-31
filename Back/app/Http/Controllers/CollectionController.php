@@ -27,7 +27,7 @@ class CollectionController extends Controller
 
     public function showUser($userId){
 
-        $user = User::with(['volumes.manga'])->find($userId);
+        $user = User::with(['volumes.manga.volumes'])->find($userId);
 
         return $user;
 
@@ -59,26 +59,26 @@ class CollectionController extends Controller
         return "le volume $volumeId a bien été supprimé de votre collection user $userId";
     }
 
-    // public function addAllToCollection($userId,$mangaId)
-    // {
-    //     $volumes = Volume::where('manga_id', $mangaId)->get();
+    public function addAllToCollection($userId,$mangaId)
+    {
+        $volumes = Volume::where('manga_id', $mangaId)->get();
 
-    //     foreach ($volumes as $volume) {
+        foreach ($volumes as $volume) {
 
-    //         $this->addToCollection($userId, $volume->id);
+            $this->addToCollection($userId, $volume->id);
 
-    //     }
-    // }
+        }
+    }
 
-    // public function removeAllFromCollection($userId, $mangaId)
+    public function removeAllFromCollection($userId, $mangaId)
 
-    // {
+    {
 
-    //     $volumes = Volume::where('manga_id', $mangaId)->get();
+        $volumes = Volume::where('manga_id', $mangaId)->get();
 
-    //     foreach ($volumes as $volume) {
+        foreach ($volumes as $volume) {
 
-    //         $this->removeFromCollection($userId, $volume->id);
-    //     }
-    // }
+            $this->removeFromCollection($userId, $volume->id);
+        }
+    }
 }

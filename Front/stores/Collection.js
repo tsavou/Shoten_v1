@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { addToCollection, getCollection, removeFromCollection } from '~/api/manga'
+import { addAllToCollection, addToCollection, getCollection, removeAllFromCollection, removeFromCollection } from '~/api/manga'
 
 
 
@@ -32,10 +32,10 @@ export const useCollectionStore = defineStore('collection', () => {
             navigateTo('/auth/login')
         } else {
             // l'utilisateur est connecté, ajout du volume dans la collection
-                // Ajout dans la bdd
+            // Ajout dans la bdd
             addToCollection(auth.user.id, volume.id)
 
-                // Ajout dans le store pour éviter de récupérer la collection via un nouvel appel API
+            // Ajout dans le store pour éviter de récupérer la collection via un nouvel appel API
             collection.value.push(volume)
 
         }
@@ -47,9 +47,9 @@ export const useCollectionStore = defineStore('collection', () => {
             navigateTo('/auth/login')
         } else {
             // l'utilisateur est connecté, suppression du volume de la collection
-                // Suppression dans la bdd
+            // Suppression dans la bdd
             removeFromCollection(auth.user.id, volume.id)
-                // Suppression dans le store
+            // Suppression dans le store
             collection.value = collection.value.filter(v => v.id !== volume.id)
         }
     }
@@ -59,16 +59,37 @@ export const useCollectionStore = defineStore('collection', () => {
     }
 
     function addMangaToCollection(manga) {
+        if (!auth.isLoggedIn) {
+            // l'utilisateur n'est pas connecté, redirection vers la page de connexion
+            navigateTo('/auth/login')
+        }
+
+        // l'utilisateur est connecté, ajout de tous les volumes de ce manga dans la collection
+        // Ajout dans la bdd
+        addAllToCollection(auth.user.id, manga.id)
+
+        // Ajout dans le store
         for (const volume of manga.volumes) {
-            addVolumeToCollection(volume)
+            collection.value.push(volume)
         }
     }
 
     function removeMangaFromCollection(manga) {
+        if (!auth.isLoggedIn) {
+            // l'utilisateur n'est pas connecté, redirection vers la page de connexion
+            navigateTo('/auth/login')
+        }
+
+        // l'utilisateur est connecté, suppression de tous les volumes de ce manga de la collection
+        // Suppression dans la bdd
+        removeAllFromCollection(auth.user.id, manga.id)
+
+        // Suppression dans le store
         for (const volume of manga.volumes) {
-            removeVolumeFromCollection(volume)
+            collection.value = collection.value.filter(v => v.id !== volume.id)
         }
     }
+    
 
 
     return {
@@ -80,6 +101,6 @@ export const useCollectionStore = defineStore('collection', () => {
         isMangaAdded,
         addMangaToCollection,
         removeMangaFromCollection
-     }
+    }
 
 })
