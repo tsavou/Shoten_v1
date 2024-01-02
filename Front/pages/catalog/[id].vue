@@ -94,6 +94,7 @@ getManga(mangaID).then((data) => {
                 </div>
 
             </div>
+            
 
             <div class="volume-info  flex-col">
                 <p>Tome {{ volume.number }}</p>

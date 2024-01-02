@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { addAllToCollection, addToCollection, getCollection, removeAllFromCollection, removeFromCollection } from '~/api/manga'
+import { addAllToCollection, addToCollection, getCollection, getManga, removeAllFromCollection, removeFromCollection } from '~/api/manga'
 
 
 
@@ -7,14 +7,24 @@ export const useCollectionStore = defineStore('collection', () => {
 
     const auth = useAuthStore()
     const collection = ref([])
-    const total = computed(() => collection.value.length)
+    const groupedCollection = ref([])
+
+    const totalVolumes = computed(() => collection.value.length)
+    const totalManga = computed(() => groupedCollection.value.length)
+
+   
 
     // Récuperation de la collection de l'utilisateur si il est connecté
     if (auth.isLoggedIn) {
         getCollection(auth.user.id).then(data => {
             collection.value = data.volumes
+        }).then(() => {
+            updateGroupedCollection();
         })
+
     }
+
+
 
     // Verification si un volume est dans la collection
     const isVolumeInCollection = (volumeId) => {
@@ -25,6 +35,7 @@ export const useCollectionStore = defineStore('collection', () => {
         }
 
     }
+    
 
     function addVolumeToCollection(volume) {
         if (!auth.isLoggedIn) {
@@ -37,6 +48,11 @@ export const useCollectionStore = defineStore('collection', () => {
 
             // Ajout dans le store pour éviter de récupérer la collection via un nouvel appel API
             collection.value.push(volume)
+
+
+            // Mise à jour de la collection groupee
+            updateGroupedCollection()
+
 
         }
     }
@@ -51,6 +67,7 @@ export const useCollectionStore = defineStore('collection', () => {
             removeFromCollection(auth.user.id, volume.id)
             // Suppression dans le store
             collection.value = collection.value.filter(v => v.id !== volume.id)
+            updateGroupedCollection()
         }
     }
 
@@ -72,6 +89,8 @@ export const useCollectionStore = defineStore('collection', () => {
         for (const volume of manga.volumes) {
             collection.value.push(volume)
         }
+
+        updateGroupedCollection()
     }
 
     function removeMangaFromCollection(manga) {
@@ -88,19 +107,51 @@ export const useCollectionStore = defineStore('collection', () => {
         for (const volume of manga.volumes) {
             collection.value = collection.value.filter(v => v.id !== volume.id)
         }
+
+        updateGroupedCollection()
     }
-    
+
+
+    // Compte le nombre de volume d'un manga 
+
+ 
+    function updateGroupedCollection() {
+
+        groupedCollection.value = collection.value.reduce((acc, current) => {
+
+            // Vérifie si le manga existe déjà dans l'accumulateur
+            const existingManga = acc.find(item => item.manga_id === current.manga_id);
+
+            if (existingManga) {
+                // Si le manga existe, ajoute juste le volume à la liste du manga
+                existingManga.volumes.push(current);
+            } else {
+                // Si le manga n'existe pas encore, crée un nouvel élément
+                acc.push({
+                    manga_id: current.manga_id,
+                    manga: current.manga,                    
+                    volumes: [current],
+                });
+            }
+
+            return acc;
+        }, []);
+
+    }
 
 
     return {
         collection,
-        total,
+        totalVolumes,
+        totalManga,
+        groupedCollection,
         isVolumeInCollection,
         addVolumeToCollection,
         removeVolumeFromCollection,
         isMangaAdded,
         addMangaToCollection,
-        removeMangaFromCollection
+        removeMangaFromCollection,
     }
 
 })
+
