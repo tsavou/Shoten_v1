@@ -5,12 +5,12 @@ export default {
     data() {
         const store = useMenuStore();
         const route = useRoute();
-        
+
         return {
             mobile: false,
             store,
             route
-            
+
         };
     },
     mounted() {
@@ -72,13 +72,12 @@ export default {
 
             </NuxtLink>
 
-            <div v-if="mobile && route.path=='/catalog'" class="mobi">
-                
-                <button @click="store.showFilter" >
+            <div v-if="mobile && route.path == '/catalog'" class="mobi">
+
+                <button @click="store.showFilter">
                     <img src="../icons/filter.svg" alt="">
                 </button>
-                <button @click="store.showSort"><img src="../icons/bar-chart.svg"
-                        alt=""></button>
+                <button @click="store.showSort"><img src="../icons/bar-chart.svg" alt=""></button>
             </div>
         </div>
 
@@ -93,10 +92,10 @@ header {
 
     @media screen and (max-width: 768px) {
         position: fixed;
-        right:0 ; 
+        right: 0;
         left: 0;
         top: 0;
-        
+
     }
 
     .head {
@@ -104,10 +103,23 @@ header {
         flex-direction: row;
         justify-content: space-between;
 
-        img {
-            height: 6rem;
-            width: 6rem;
+        a {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            .logo {
+
+                img {
+                    width: 10rem;
+
+                    @media screen {max-width: 768px;
+                        width: 8rem;
+                    }
+                }
+            }
         }
+
 
         .title {
             display: flex;

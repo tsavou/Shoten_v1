@@ -12,11 +12,12 @@ const route = useRoute();
 
 <style scoped>
 
+/*n'affiche le footer que sur la page d'accueil en desktop */
 .desk-header-home {
     @media screen and (max-width: 768px) {
-        display: none;
+        display: none;  
         
-    }
+    } 
 }
 .DefaultLayout {
     margin-bottom: 6rem;

@@ -16,21 +16,11 @@ class CollectionController extends Controller
         return $collection;
     }
 
-    public function showUserCollection($userId)
-    {
-
-        $collection = Collection::with(['volume.manga', 'user'])->where('user_id', $userId)->get();
-
-        // return $user;
-        return $collection;
-    }
-
     public function showUser($userId){
 
         $user = User::with(['volumes.manga.volumes'])->find($userId);
 
         return $user;
-
     }
 
     public function addToCollection( $userId, $volumeId)

@@ -57,6 +57,8 @@ const route = useRoute();
 </template>
 
 <style scoped lang="scss">
+
+//Footer fixe sur mobile
 footer {
     position: fixed;
     bottom: 0;
@@ -91,7 +93,7 @@ footer {
 
             @media screen and (min-width: 768px) {
                 &:not(:nth-child(3)) {
-                    display: none;
+                    display: none; // Ne garde que le logo pour la version desktop
                 }
             }
 

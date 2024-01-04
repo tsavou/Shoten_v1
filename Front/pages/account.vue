@@ -26,7 +26,7 @@ definePageMeta({
                 <button v-if="auth.isLoggedIn" @click="auth.logout" class="disco"> Déconnexion </button>
             </div>
 
-            <div class="reseaux flex">
+            <div class="reseaux">
                 <p>Suivez-nous </p>
                 <img src="../public/icons/logos/Apple.svg" alt="">
                 <img src="../public/icons/logos/Facebook.svg" alt="">
@@ -40,10 +40,7 @@ definePageMeta({
 
 <style scoped lang="scss">
 body {
-    background: url("/img/background/bacount.jpg");
-    color: #142034;
-    display: flex;
-    flex-direction: column;
+
     
 
     .text {

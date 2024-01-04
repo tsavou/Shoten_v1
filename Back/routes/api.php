@@ -34,7 +34,6 @@ Route::get('/genres', [GenreController::class, 'index'])->name('genre');
 Route::get('/types', [TypeController::class, 'index'])->name('type');
 Route::get('/volumes', [VolumeController::class, 'index'])->name('volumes');
 
-Route::get('/userCollection/{userId}', [CollectionController::class, 'showUserCollection'])->name('collection.show');
 Route::get('/user/{userId}/collection', [CollectionController::class, 'showUser'])->name('collection.showUser');
 
 Route::post('user/{userId}/collection/{volumeId}', [CollectionController::class, 'addToCollection'])->name('collection.addToCollection');

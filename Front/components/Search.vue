@@ -44,13 +44,13 @@ export default {
   <div class="search">
     <input type="text" input v-model="searchQuery" @input="performSearch" name="search" id="recherche"
       placeholder="Recherche un manga">
-    <img class="rech" src="../icons/search.svg">
+    <img class="rech" src="../public/icons/search.svg">
 
     <div class="pro" v-if="Object.keys(searchResults).length > 0 && lastSearchQuery !== searchQuery">
       <ul>
         <li v-for="(manga, index) in searchResults" :key="manga.id">
 
-          <NuxtLink :to="`/catalog/${manga.id}`">
+          <NuxtLink :to="`/catalog/${manga.id}`" class="flex">
             <img :key="index" :src="manga.image" :alt="manga.title" class="icato" @click="click()">
             <p>{{ manga.title }} </p>
           </NuxtLink>
@@ -90,21 +90,36 @@ export default {
     background: #0CA06B;
     color: #F8F9FA;
     position: absolute;
-    display: flex;
-    padding: 4rem;
-    margin-top: 10rem;
+    right: 15rem;
+    padding: 2rem;
+    margin-top: 12rem;
     z-index: 999;
-    height: 30rem;
+    max-height: 50rem;
     overflow-y: auto;
-    justify-content: space-between;
 
-    .icato {
-      justify-content: space-between;
-      height: 10rem;
+    @media screen and (max-width:768px){
+      margin-top: 6.5rem;
+      width: 100vw;
+      right: 0;
+      max-height: 100vh;
     }
 
+
     li {
-      justify-content: space-between;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+
+      a {
+        align-items: center;
+        gap: 2rem;
+        color: $light-text-color;
+        font-weight: bold;
+
+        .icato {
+          height: 7rem;
+        }
+      }
     }
   }
 
@@ -123,7 +138,6 @@ export default {
 
 
     .rech {
-      justify-content: space-between;
       width: 2rem;
       height: 2rem;
 

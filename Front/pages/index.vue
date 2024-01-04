@@ -32,13 +32,12 @@
         >
           <NuxtLink :to="`/catalog/${manga.id}`">
             <img :src="manga.image" />
-            <p>{{ manga.title }}</p>
           </NuxtLink>
         </div>
       </Slider>
     </section>
     <section>
-      <h2>Les plus populaire</h2>
+      <h2>Les plus populaires</h2>
       <Slider class="slider" @minusClick="slider2ID--" @plusClick="slider2ID++">
         <div
           :class="
@@ -51,7 +50,6 @@
         >
           <NuxtLink :to="`/catalog/${manga.id}`">
           <img :src="manga.image" />
-          <p>{{ manga.title }}</p>
           </NuxtLink>
         </div>
       </Slider>
@@ -153,7 +151,9 @@ let slider2ID = ref(1);
 }
 
 section {
-  padding: 2rem;
+  h2 {
+    text-align: center;
+  }
   .tome {
     width: 15rem;
     height: 20rem;
@@ -170,12 +170,17 @@ section {
   .jumbotron {
     gap: 1rem;
     padding: 1rem;
+
+    .text-cta{
+      font-size: 3rem;
+    }
+
+    .btn-cta{
+      width: fit-content;
+    }
   }
 
-  h2 {
-    text-align: center;
-  }
-
+ 
   .slider {
     .active {
       display: block;
@@ -185,6 +190,10 @@ section {
       display: none;
     }
   }
+}
+
+main{
+  margin-bottom: 3rem;
 }
 </style>
 
