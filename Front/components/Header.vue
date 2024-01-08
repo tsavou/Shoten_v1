@@ -88,15 +88,13 @@ export default {
 header {
     color: #F8F9FA;
     background-color: #0CA06B;
-    position: relative;
+    position: fixed;
+    right: 0;
+    left: 0;
+    top: 0;
+    z-index: 1;
 
-    @media screen and (max-width: 768px) {
-        position: fixed;
-        right: 0;
-        left: 0;
-        top: 0;
 
-    }
 
     .head {
         display: flex;
@@ -113,7 +111,8 @@ header {
                 img {
                     width: 10rem;
 
-                    @media screen {max-width: 768px;
+                    @media screen {
+                        max-width: 768px;
                         width: 8rem;
                     }
                 }
@@ -124,8 +123,12 @@ header {
         .title {
             display: flex;
             justify-content: center;
-            padding: 4rem;
             color: #F8F9FA;
+            font-size: 1.5rem;
+            @media screen and (max-width: 1000px) {
+                font-size: 1rem;
+                
+            }
         }
 
         .active-link {

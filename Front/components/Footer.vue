@@ -1,20 +1,16 @@
 <script setup>
-
 const route = useRoute();
-
 </script>
 
 <template>
     <footer>
-
         <nav>
             <NuxtLink to="/catalog">
+
                 <IconsCatalogActive v-if="route.path === '/catalog'" />
                 <IconsCatalog v-else />
 
-                <div class="nav-title">
-                    Catalogue
-                </div>
+                <span class="nav-title">Catalogue</span>
 
             </NuxtLink>
 
@@ -23,9 +19,7 @@ const route = useRoute();
                 <IconsPlanningActive v-if="route.path === '/planning'" />
                 <IconsPlanning v-else />
 
-                <div class="nav-title">
-                    Sorties
-                </div>
+                <span class="nav-title">Sorties</span>
 
             </NuxtLink>
 
@@ -37,27 +31,22 @@ const route = useRoute();
                 <IconsCollecActive v-if="route.path === '/collection'" />
                 <IconsCollec v-else />
 
-                <div class="nav-title">
-                    Collection
-                </div>
+                <span class="nav-title">Collection</span>
             </NuxtLink>
 
             <NuxtLink to="/account">
 
-                <IconsUserActive v-if="route.path === '/auth/login' || route.path === '/auth/register' || route.path === '/account'" />
+                <IconsUserActive
+                    v-if="route.path === '/auth/login' || route.path === '/auth/register' || route.path === '/account'" />
                 <IconsUser v-else />
 
-                <div class="nav-title">
-                    Compte
-                </div>
+                <span class="nav-title">Compte</span>
             </NuxtLink>
         </nav>
-
     </footer>
 </template>
 
 <style scoped lang="scss">
-
 //Footer fixe sur mobile
 footer {
     position: fixed;
@@ -75,15 +64,11 @@ footer {
 
     }
 
-
-
     nav {
         display: flex;
         justify-content: space-between;
         align-items: center;
         gap: 2.5rem;
-
-
 
         a {
             display: flex;
@@ -93,10 +78,9 @@ footer {
 
             @media screen and (min-width: 768px) {
                 &:not(:nth-child(3)) {
-                    display: none; // Ne garde que le logo pour la version desktop
+                    display: none;
                 }
             }
-
 
             svg {
                 width: 3rem;
@@ -115,7 +99,6 @@ footer {
         .nav-title {
             font-size: 1rem;
         }
-
     }
 
 }

@@ -1,11 +1,10 @@
 <script setup>
 
-import { getManga, addToCollection, getCollection } from "@/api/manga";
+import { getManga } from "@/api/manga";
 import { useCollectionStore } from "@/stores/Collection";
 
-definePageMeta({
-    layout: "content"
-});
+
+
 
 const route = useRoute();
 
@@ -23,11 +22,14 @@ getManga(mangaID).then((data) => {
 
 });
 
+useHead({
+    title: "Shoten "
+})
 
 </script>
 
 <template>
-    <Header class="header-manga" />
+
     <div v-if="!loading" class="manga-container">
         <div class="overlay">
             <img class="mobile-bg" :src="manga.image" alt="">
@@ -42,13 +44,11 @@ getManga(mangaID).then((data) => {
 
                     <ButtonsAdd v-if="!store.isMangaAdded(manga)" @click="store.addMangaToCollection(manga)" />
                     <ButtonsAdded v-else @click="store.removeMangaFromCollection(manga)" />
-
-
-
                 </div>
-            </div>
-            <div class="manga-content flex">
 
+            </div>
+
+            <div class="manga-content flex">
 
                 <div class="img-wrapper">
                     <img class="manga-img" :src="manga.image" :alt="manga.title">
@@ -57,8 +57,8 @@ getManga(mangaID).then((data) => {
                 <div>
                     <ul>
                         <li><span>Type : </span>{{ manga.type ? manga.type.name : 'N/A' }}</li>
-                        <li><span>Genres : </span> {{ manga.genre ? manga.genre.map(genre => genre.name).join(', ') : 'N/A'
-                        }} </li>
+                        <li><span>Genres : </span> {{ manga.genre ? manga.genre.map(genre => genre.name).join(', ') :
+                            'N/A' }} </li>
                         <li><span>Auteur : </span>{{ manga.author ? manga.author : 'N/A' }}</li>
                         <li><span>Editeur : </span>{{ manga.editor ? manga.editor : 'N/A' }}</li>
                         <li><span>Date de 1ère publication : </span>{{ manga.release_date ? new
@@ -69,9 +69,7 @@ getManga(mangaID).then((data) => {
                     </ul>
 
                 </div>
-
             </div>
-
         </div>
     </div>
 
@@ -82,11 +80,12 @@ getManga(mangaID).then((data) => {
     </div>
 
     <div class="volumes-container flex">
+
         <div class="volume-card flex" v-for="volume in manga.volumes">
 
             <div class="volume-img-wrapper">
-                <img :src="volume.image" :alt="manga.title + 'tome' + volume.number">
-                
+                <img :src="volume.image" :alt="manga.title + ' tome ' + volume.number">
+
                 <div class="desktop-btn flex">
                     <IconsCheck v-if="store.isVolumeInCollection(volume.id)"
                         @click="store.removeVolumeFromCollection(volume)" />
@@ -94,7 +93,6 @@ getManga(mangaID).then((data) => {
                 </div>
 
             </div>
-            
 
             <div class="volume-info  flex-col">
                 <p>Tome {{ volume.number }}</p>
@@ -108,7 +106,7 @@ getManga(mangaID).then((data) => {
         </div>
 
     </div>
-    <Footer />
+
 </template>
 
 <style scoped lang="scss">
@@ -300,4 +298,5 @@ getManga(mangaID).then((data) => {
         }
 
     }
-}</style>
+}
+</style>

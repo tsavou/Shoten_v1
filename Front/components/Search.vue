@@ -44,7 +44,7 @@ export default {
   <div class="search">
     <input type="text" input v-model="searchQuery" @input="performSearch" name="search" id="recherche"
       placeholder="Recherche un manga">
-    <img class="rech" src="../public/icons/search.svg">
+    <img class="rech" src="/icons/search.svg">
 
     <div class="pro" v-if="Object.keys(searchResults).length > 0 && lastSearchQuery !== searchQuery">
       <ul>

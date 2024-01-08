@@ -4,6 +4,10 @@ const auth = useAuthStore();
 definePageMeta({
     middleware: 'auth'
 })
+
+useHead({
+    title: 'Shoten - Mon compte',
+})
 </script>
 
 <template>

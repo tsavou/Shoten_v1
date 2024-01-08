@@ -1,6 +1,6 @@
 
 <template>
-  <Header class="header-home"/>
+  <!-- <Header class="header-home"/> -->
   <main>
     <div class="jumbotron flex-col">
       <div class="main-text flex-col">
@@ -55,13 +55,12 @@
       </Slider>
     </section>
   </main>
-  <Footer/>
 </template>
 
 <script setup>
 
 definePageMeta({
-  layout: "content",
+  layout: "default",
 })
 //Get all mangas and store it in array mangas
 const mangas = ref([]);
@@ -109,11 +108,11 @@ let slider2ID = ref(1);
 </script>
 
 <style scoped lang="scss">
-.header-home {
-  @media screen and (max-width: 768px) {
-    display: none;
-  }
-}
+// .header-home {
+//   @media screen and (max-width: 768px) {
+//     display: none;
+//   }
+// }
 .jumbotron {
   width: 100%;
   padding: 2rem;

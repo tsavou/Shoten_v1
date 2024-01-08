@@ -110,6 +110,7 @@ async function handleLogin() {
 
   // If the user is authenticated, redirect to the home page
   if (auth.user) {
+
     navigateTo("/collection");
   }
   // If the user is not authenticated, display an error message
@@ -117,6 +118,10 @@ async function handleLogin() {
     error.value = "Incorrect email or password";
   }
 }
+
+useHead({
+  title: "Shoten - Connexion",
+})
 </script>
 
 <style scoped lang="scss">

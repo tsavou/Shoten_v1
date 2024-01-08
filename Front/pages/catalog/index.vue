@@ -3,14 +3,21 @@
 import { useMenuStore } from "@/stores/Showmenu";
 import { getMangas, getGenres, getTypes } from "@/api/manga";
 
+useHead({
+    title: "Shoten - Catalogue",
+});
+
 const mangas = ref([]);
 const genres = ref([]);
 const types = ref([]);
+const loading = ref(true);
 
 
 getMangas().then((data) => {
     mangas.value = data;
     filterBy();
+    loading.value = false
+
 });
 
 getGenres().then((data) => {
@@ -21,13 +28,14 @@ getTypes().then((data) => {
     types.value = data;
 });
 
+const store = useMenuStore();
 
-const selectedTypes = ref([]);
-const selectedGenres = ref([]);
+
 
 const filteredMangas = ref([...mangas.value]);
 
-const store = useMenuStore();
+const selectedTypes = ref([]);
+const selectedGenres = ref([]);
 
 const filterBy = () => {
     filteredMangas.value = mangas.value.filter((manga) => {
@@ -51,6 +59,7 @@ const sortMangas = () => {
             return b.popularity - a.popularity;
         }
     })
+
     return store.selectedMenu = "";
 }
 
@@ -62,7 +71,9 @@ const sortMangas = () => {
 <template>
     <div v-if="store.selectedMenu == 'filter'" class="filter flex-col">
         <form @submit.prevent="filterBy">
+
             <input class="submit-btn" type="submit" value="Filtrer">
+
             <div class="filter-group">
                 <p>Types</p>
                 <div class="types" v-for="(type, index) in types" :key="index">
@@ -72,6 +83,7 @@ const sortMangas = () => {
                     </label>
                 </div>
             </div>
+
             <div class="filter-group">
                 <p>Genres</p>
                 <div class="genres" v-for="(genre, index) in genres" :key="index">
@@ -82,8 +94,6 @@ const sortMangas = () => {
 
                 </div>
             </div>
-
-
         </form>
     </div>
 
@@ -113,6 +123,11 @@ const sortMangas = () => {
 
     <main class="flex">
 
+        <div class="loader" v-if="loading">
+            <IconsLoader />
+            <p>Loading</p>
+        </div>
+
         <div class="manga-list flex">
             <div class="manga" v-for="(manga, index) in filteredMangas" :key="index">
                 <NuxtLink :to="`/catalog/${manga.id}`">
@@ -129,7 +144,7 @@ const sortMangas = () => {
 .filter,
 .sort {
     position: fixed;
-    top: 4.3rem; //header height
+    top: 5.2rem; //header height
     right: 0;
     bottom: 0;
     width: 40vw;
@@ -137,6 +152,7 @@ const sortMangas = () => {
     color: $light-text-color;
     padding: 1rem;
     overflow: scroll;
+
 
 
     p {
@@ -238,6 +254,16 @@ main {
 
         .manga {
             flex-basis: calc(100%/2 - 2rem);
+
+            @media screen and (min-width: 480px) {
+                flex-basis: calc(100%/3 - 2rem);
+            }
+
+
+            @media screen and (min-width: 600px) {
+                flex-basis: calc(100%/4 - 2rem);
+            }
+
 
 
             @media screen and (min-width: 768px) {
